@@ -1,0 +1,19 @@
+{
+    "name": "softspring/admin-bundle",
+    "description": "This bundle provides admin basic features.",
+    "license": "MIT",
+    "require": {
+        "php": "^7.0",
+        "softspring/extra-bundle": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Softspring\\AdminBundle\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
