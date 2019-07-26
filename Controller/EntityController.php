@@ -29,17 +29,17 @@ class EntityController extends AbstractController
     protected $eventDispatcher;
 
     /**
-     * @var AdminEntityListFilterFormInterface
+     * @var AdminEntityListFilterFormInterface|null
      */
     protected $listFilterForm;
 
     /**
-     * @var AdminEntityCreateFormInterface
+     * @var AdminEntityCreateFormInterface|null
      */
     protected $createForm;
 
     /**
-     * @var AdminEntityUpdateFormInterface
+     * @var AdminEntityUpdateFormInterface|null
      */
     protected $updateForm;
 
@@ -57,13 +57,13 @@ class EntityController extends AbstractController
      * EntityController constructor.
      * @param AdminEntityManagerInterface $manager
      * @param EventDispatcherInterface $eventDispatcher
-     * @param AdminEntityListFilterFormInterface $listFilterForm
-     * @param AdminEntityCreateFormInterface $createForm
-     * @param AdminEntityUpdateFormInterface $updateForm
+     * @param AdminEntityListFilterFormInterface|null $listFilterForm
+     * @param AdminEntityCreateFormInterface|null $createForm
+     * @param AdminEntityUpdateFormInterface|null $updateForm
      * @param AdminEntityDeleteFormInterface|null $deleteForm
      * @param array $config
      */
-    public function __construct(AdminEntityManagerInterface $manager, EventDispatcherInterface $eventDispatcher, AdminEntityListFilterFormInterface $listFilterForm, AdminEntityCreateFormInterface $createForm, AdminEntityUpdateFormInterface $updateForm, ?AdminEntityDeleteFormInterface $deleteForm = null, array $config = [])
+    public function __construct(AdminEntityManagerInterface $manager, EventDispatcherInterface $eventDispatcher, ?AdminEntityListFilterFormInterface $listFilterForm = null, ?AdminEntityCreateFormInterface $createForm = null, ?AdminEntityUpdateFormInterface $updateForm = null, ?AdminEntityDeleteFormInterface $deleteForm = null, array $config = [])
     {
         $this->manager = $manager;
         $this->eventDispatcher = $eventDispatcher;
@@ -81,21 +81,30 @@ class EntityController extends AbstractController
      */
     public function list(Request $request): Response
     {
-        // additional fields for pagination and sorting
-        $page = $this->listFilterForm->getPage($request);
-        $rpp = $this->listFilterForm->getRpp($request);
-        $orderSort = $this->listFilterForm->getOrder($request);
-
-        // filter form
-        $form = $this->createForm(get_class($this->listFilterForm))->handleRequest($request);
-        $filters = $form->isSubmitted() && $form->isValid() ? array_filter($form->getData()) : [];
-
-        // get results
         $repo = $this->manager->getRepository();
-        if ($repo instanceof PaginatedRepository) {
-            $entities = $repo->findPageBy($page, $rpp, $filters, $orderSort);
+
+        if ($this->listFilterForm) {
+            if (!$this->listFilterForm instanceof AdminEntityListFilterFormInterface) {
+                throw new \InvalidArgumentException(sprintf('List filter form must be an instance of %s', AdminEntityListFilterFormInterface::class));
+            }
+
+            // additional fields for pagination and sorting
+            $page = $this->listFilterForm->getPage($request);
+            $rpp = $this->listFilterForm->getRpp($request);
+            $orderSort = $this->listFilterForm->getOrder($request);
+
+            // filter form
+            $form = $this->createForm(get_class($this->listFilterForm))->handleRequest($request);
+            $filters = $form->isSubmitted() && $form->isValid() ? array_filter($form->getData()) : [];
+
+            // get results
+            if ($repo instanceof PaginatedRepository) {
+                $entities = $repo->findPageBy($page, $rpp, $filters, $orderSort);
+            } else {
+                $entities = $repo->findBy($filters, $orderSort, $rpp, ($page - 1) * $rpp);
+            }
         } else {
-            $entities = $repo->findBy($filters, $orderSort, $rpp, ($page-1)*$rpp);
+            $entities = $repo->findAll();
         }
 
         // show view
@@ -119,6 +128,10 @@ class EntityController extends AbstractController
      */
     public function create(Request $request): Response
     {
+        if (!$this->createForm instanceof AdminEntityCreateFormInterface) {
+            throw new \InvalidArgumentException(sprintf('Create form must be an instance of %s', AdminEntityCreateFormInterface::class));
+        }
+
         $newEntity = $this->manager->createEntity();
 
         if ($response = $this->dispatchGetResponse($this->config['create']['initialize_event_name'], new GetResponseEntityEvent($newEntity, $request))) {
