@@ -2,6 +2,7 @@
 
 namespace Softspring\AdminBundle\Form;
 
+use Jhg\DoctrinePaginationBundle\Request\RequestParam;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,6 +54,13 @@ class AdminEntityListFilterForm extends AbstractType implements AdminEntityListF
 
     public function getOrder(Request $request): array
     {
+        if (class_exists(RequestParam::class)) {
+            $order = RequestParam::getQueryValidParam($request, self::getOrderFieldParamName(), 'id', ['id']);
+            $sort = RequestParam::getQueryValidParam($request, self::getOrderDirectionParamName(), 'asc', ['asc','desc']);
+
+            return [$order => $sort];
+        }
+
         return [$request->query->get(self::getOrderFieldParamName(), 'id') => $request->query->get(self::getOrderDirectionParamName(), 'asc')];
     }
 
