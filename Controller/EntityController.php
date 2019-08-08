@@ -16,6 +16,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Entity CRUDL controller (CRUD+listing)
+ */
 class EntityController extends AbstractController
 {
     /**
@@ -111,6 +114,7 @@ class EntityController extends AbstractController
         $viewData = new \ArrayObject([
             'entities' => $entities,
             'filterForm' => $form->createView(),
+            'read_route' => $this->config['list']['read_route'] ?? null,
         ]);
 
         $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['list']['view_event_name']);
@@ -168,5 +172,29 @@ class EntityController extends AbstractController
         $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['create']['view_event_name']);
 
         return $this->render($this->config['create']['view'], $viewData->getArrayCopy());
+    }
+
+    /**
+     * @param string $entity
+     * @param Request $request
+     * @return Response
+     */
+    public function read(string $entity, Request $request): Response
+    {
+        // convert entity
+        $entity = $this->manager->getRepository()->findOneBy([$this->config['read']['param_converter_key']=>$entity]);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Entity not found');
+        }
+
+        // show view
+        $viewData = new \ArrayObject([
+            'entity' => $entity,
+        ]);
+
+        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['read']['view_event_name']);
+
+        return $this->render($this->config['read']['view'], $viewData->getArrayCopy());
     }
 }
