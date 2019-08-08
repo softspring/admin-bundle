@@ -3,9 +3,9 @@
 namespace Softspring\AdminBundle\Controller;
 
 use Jhg\DoctrinePagination\ORM\PaginatedRepository;
-use Softspring\AccountBundle\Event\ViewEvent;
 use Softspring\AdminBundle\Event\GetResponseEntityEvent;
 use Softspring\AdminBundle\Event\GetResponseFormEvent;
+use Softspring\AdminBundle\Event\ViewEvent;
 use Softspring\AdminBundle\Form\AdminEntityCreateFormInterface;
 use Softspring\AdminBundle\Form\AdminEntityDeleteFormInterface;
 use Softspring\AdminBundle\Form\AdminEntityListFilterFormInterface;
