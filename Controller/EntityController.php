@@ -79,55 +79,6 @@ class EntityController extends AbstractController
 
     /**
      * @param Request $request
-     *
-     * @return Response
-     */
-    public function list(Request $request): Response
-    {
-        $repo = $this->manager->getRepository();
-
-        if ($this->listFilterForm) {
-            if (!$this->listFilterForm instanceof AdminEntityListFilterFormInterface) {
-                throw new \InvalidArgumentException(sprintf('List filter form must be an instance of %s', AdminEntityListFilterFormInterface::class));
-            }
-
-            // additional fields for pagination and sorting
-            $page = $this->listFilterForm->getPage($request);
-            $rpp = $this->listFilterForm->getRpp($request);
-            $orderSort = $this->listFilterForm->getOrder($request);
-
-            // filter form
-            $form = $this->createForm(get_class($this->listFilterForm))->handleRequest($request);
-            $filters = $form->isSubmitted() && $form->isValid() ? array_filter($form->getData()) : [];
-
-            // get results
-            if ($repo instanceof PaginatedRepository) {
-                $entities = $repo->findPageBy($page, $rpp, $filters, $orderSort);
-            } else {
-                $entities = $repo->findBy($filters, $orderSort, $rpp, ($page - 1) * $rpp);
-            }
-        } else {
-            $entities = $repo->findAll();
-        }
-
-        // show view
-        $viewData = new \ArrayObject([
-            'entities' => $entities,
-            'filterForm' => $form->createView(),
-            'read_route' => $this->config['list']['read_route'] ?? null,
-        ]);
-
-        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['list']['view_event_name']);
-
-        if ($request->isXmlHttpRequest()) {
-            return $this->render($this->config['list']['view_page'], $viewData->getArrayCopy());
-        } else {
-            return $this->render($this->config['list']['view'], $viewData->getArrayCopy());
-        }
-    }
-
-    /**
-     * @param Request $request
      * @return Response
      */
     public function create(Request $request): Response
@@ -196,5 +147,74 @@ class EntityController extends AbstractController
         $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['read']['view_event_name']);
 
         return $this->render($this->config['read']['view'], $viewData->getArrayCopy());
+    }
+
+    /**
+     * @param string $entity
+     * @param Request $request
+     * @return Response
+     */
+    public function update(string $entity, Request $request): Response
+    {
+        throw $this->createNotFoundException('Not yet implemented');
+    }
+
+    /**
+     * @param string $entity
+     * @param Request $request
+     * @return Response
+     */
+    public function delete(string $entity, Request $request): Response
+    {
+        throw $this->createNotFoundException('Not yet implemented');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function list(Request $request): Response
+    {
+        $repo = $this->manager->getRepository();
+
+        if ($this->listFilterForm) {
+            if (!$this->listFilterForm instanceof AdminEntityListFilterFormInterface) {
+                throw new \InvalidArgumentException(sprintf('List filter form must be an instance of %s', AdminEntityListFilterFormInterface::class));
+            }
+
+            // additional fields for pagination and sorting
+            $page = $this->listFilterForm->getPage($request);
+            $rpp = $this->listFilterForm->getRpp($request);
+            $orderSort = $this->listFilterForm->getOrder($request);
+
+            // filter form
+            $form = $this->createForm(get_class($this->listFilterForm))->handleRequest($request);
+            $filters = $form->isSubmitted() && $form->isValid() ? array_filter($form->getData()) : [];
+
+            // get results
+            if ($repo instanceof PaginatedRepository) {
+                $entities = $repo->findPageBy($page, $rpp, $filters, $orderSort);
+            } else {
+                $entities = $repo->findBy($filters, $orderSort, $rpp, ($page - 1) * $rpp);
+            }
+        } else {
+            $entities = $repo->findAll();
+        }
+
+        // show view
+        $viewData = new \ArrayObject([
+            'entities' => $entities,
+            'filterForm' => $form->createView(),
+            'read_route' => $this->config['list']['read_route'] ?? null,
+        ]);
+
+        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['list']['view_event_name']);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render($this->config['list']['view_page'], $viewData->getArrayCopy());
+        } else {
+            return $this->render($this->config['list']['view'], $viewData->getArrayCopy());
+        }
     }
 }
