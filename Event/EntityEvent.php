@@ -2,7 +2,6 @@
 
 namespace Softspring\AdminBundle\Event;
 
-use Softspring\Account\Model\AccountInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
