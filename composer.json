@@ -6,6 +6,9 @@
         "php": "^7.0",
         "softspring/extra-bundle": "*"
     },
+    "suggest": {
+        "softspring/core-bundle": "Use softspring core bundle"
+    },
     "autoload": {
         "psr-4": {
             "Softspring\\AdminBundle\\": ""
