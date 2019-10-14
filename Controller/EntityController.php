@@ -107,7 +107,7 @@ class EntityController extends AbstractController
                     return $response;
                 }
 
-                return $this->redirectToRoute('sfs_user_register_success');
+                return $this->redirect(!empty($this->config['create']['success_redirect_to']) ? $this->generateUrl($this->config['create']['success_redirect_to']) : '/');
             } else {
                 if ($response = $this->dispatchGetResponse($this->config['create']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
                     return $response;
