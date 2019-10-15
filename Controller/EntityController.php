@@ -83,6 +83,10 @@ class EntityController extends AbstractController
      */
     public function create(Request $request): Response
     {
+        if (empty($this->config['create'])) {
+            throw new \InvalidArgumentException('Create action configuration is empty');
+        }
+
         if (!$this->createForm instanceof AdminEntityCreateFormInterface) {
             throw new \InvalidArgumentException(sprintf('Create form must be an instance of %s', AdminEntityCreateFormInterface::class));
         }
@@ -132,6 +136,10 @@ class EntityController extends AbstractController
      */
     public function read(string $entity, Request $request): Response
     {
+        if (empty($this->config['read'])) {
+            throw new \InvalidArgumentException('Read action configuration is empty');
+        }
+
         // convert entity
         $entity = $this->manager->getRepository()->findOneBy([$this->config['read']['param_converter_key']=>$entity]);
 
@@ -156,7 +164,11 @@ class EntityController extends AbstractController
      */
     public function update(string $entity, Request $request): Response
     {
-        $entity = $this->manager->getRepository()->findOneById($entity);
+        if (empty($this->config['update'])) {
+            throw new \InvalidArgumentException('Update action configuration is empty');
+        }
+
+        $entity = $this->manager->getRepository()->findOneBy([$this->config['update']['param_converter_key']=>$entity]);
 
         if (!$this->updateForm instanceof AdminEntityUpdateFormInterface) {
             throw new \InvalidArgumentException(sprintf('Update form must be an instance of %s', AdminEntityUpdateFormInterface::class));
@@ -191,6 +203,7 @@ class EntityController extends AbstractController
         // show view
         $viewData = new \ArrayObject([
             'form' => $form->createView(),
+            'entity' => $entity,
         ]);
 
         $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['update']['view_event_name']);
@@ -205,7 +218,51 @@ class EntityController extends AbstractController
      */
     public function delete(string $entity, Request $request): Response
     {
-        throw $this->createNotFoundException('Not yet implemented');
+        if (empty($this->config['delete'])) {
+            throw new \InvalidArgumentException('Delete action configuration is empty');
+        }
+
+        $entity = $this->manager->getRepository()->findOneBy([$this->config['delete']['param_converter_key']=>$entity]);
+
+        if (!$this->deleteForm instanceof AdminEntityDeleteFormInterface) {
+            throw new \InvalidArgumentException(sprintf('Delete form must be an instance of %s', AdminEntityDeleteFormInterface::class));
+        }
+
+        if ($response = $this->dispatchGetResponse($this->config['delete']['initialize_event_name'], new GetResponseEntityEvent($entity, $request))) {
+            return $response;
+        }
+
+        $form = $this->createForm(get_class($this->deleteForm), $entity, ['method' => 'POST'])->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                if ($response = $this->dispatchGetResponse($this->config['delete']['form_valid_event_name'], new GetResponseFormEvent($form, $request))) {
+                    return $response;
+                }
+
+                $this->remove($entity, true);
+
+                if ($response = $this->dispatchGetResponse($this->config['delete']['success_event_name'], new GetResponseEntityEvent($entity, $request))) {
+                    return $response;
+                }
+
+                return $this->redirect(!empty($this->config['delete']['success_redirect_to']) ? $this->generateUrl($this->config['delete']['success_redirect_to']) : '/');
+            } else {
+                if ($response = $this->dispatchGetResponse($this->config['delete']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
+                    return $response;
+                }
+            }
+        }
+
+        // show view
+        $viewData = new \ArrayObject([
+            'form' => $form->createView(),
+            'entity' => $entity,
+        ]);
+
+        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['delete']['view_event_name']);
+
+        return $this->render($this->config['delete']['view'], $viewData->getArrayCopy());
     }
 
     /**
@@ -215,6 +272,10 @@ class EntityController extends AbstractController
      */
     public function list(Request $request): Response
     {
+        if (empty($this->config['list'])) {
+            throw new \InvalidArgumentException('List action configuration is empty');
+        }
+
         $repo = $this->manager->getRepository();
 
         if ($this->listFilterForm) {
