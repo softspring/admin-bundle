@@ -1,6 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends ['@SfsCore/base.html.twig', 'base.html.twig'] %}
 
 {% block body %}
-    {% block content %}
-    {% endblock content %}
+    <div class="container-fluid row">
+        <div class="col-3">
+            {% include '@SfsAdmin/partials/sidebar.html.twig' %}
+        </div>
+        <section id="main-content" class="col-9">
+            {% block content %}
+            {% endblock content %}
+        </section>
+    </div>
 {% endblock body %}
