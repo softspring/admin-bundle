@@ -11,7 +11,7 @@ use Softspring\AdminBundle\Form\AdminEntityDeleteFormInterface;
 use Softspring\AdminBundle\Form\AdminEntityListFilterFormInterface;
 use Softspring\AdminBundle\Form\AdminEntityUpdateFormInterface;
 use Softspring\AdminBundle\Manager\AdminEntityManagerInterface;
-use Softspring\ExtraBundle\Controller\AbstractController;
+use Softspring\CoreBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
