@@ -8,8 +8,25 @@ interface AdminEntityManagerInterface
 {
     /**
      * @return string
+     *
+     * @deprecated use getTargetClass
      */
     public function getClass(): string;
+
+    /**
+     * @return string
+     */
+    public function getTargetClass(): string;
+
+    /**
+     * @return string
+     */
+    public function getEntityClass(): string;
+
+    /**
+     * @return \ReflectionClass
+     */
+    public function getEntityClassReflection(): \ReflectionClass;
 
     /**
      * @return EntityRepository
