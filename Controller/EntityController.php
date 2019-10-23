@@ -87,6 +87,10 @@ class EntityController extends AbstractController
             throw new \InvalidArgumentException('Create action configuration is empty');
         }
 
+        if (!empty($this->config['create']['is_granted'])) {
+            $this->denyAccessUnlessGranted($this->config['create']['is_granted'], null, sprintf('Access denied, user is not %s.', $this->config['create']['is_granted']));
+        }
+
         if (!$this->createForm instanceof AdminEntityCreateFormInterface) {
             throw new \InvalidArgumentException(sprintf('Create form must be an instance of %s', AdminEntityCreateFormInterface::class));
         }
@@ -143,6 +147,10 @@ class EntityController extends AbstractController
         // convert entity
         $entity = $this->manager->getRepository()->findOneBy([$this->config['read']['param_converter_key']=>$entity]);
 
+        if (!empty($this->config['read']['is_granted'])) {
+            $this->denyAccessUnlessGranted($this->config['read']['is_granted'], $entity, sprintf('Access denied, user is not %s.', $this->config['read']['is_granted']));
+        }
+
         if (!$entity) {
             throw $this->createNotFoundException('Entity not found');
         }
@@ -169,6 +177,14 @@ class EntityController extends AbstractController
         }
 
         $entity = $this->manager->getRepository()->findOneBy([$this->config['update']['param_converter_key']=>$entity]);
+
+        if (!empty($this->config['update']['is_granted'])) {
+            $this->denyAccessUnlessGranted($this->config['update']['is_granted'], $entity, sprintf('Access denied, user is not %s.', $this->config['update']['is_granted']));
+        }
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Entity not found');
+        }
 
         if (!$this->updateForm instanceof AdminEntityUpdateFormInterface) {
             throw new \InvalidArgumentException(sprintf('Update form must be an instance of %s', AdminEntityUpdateFormInterface::class));
@@ -224,6 +240,14 @@ class EntityController extends AbstractController
 
         $entity = $this->manager->getRepository()->findOneBy([$this->config['delete']['param_converter_key']=>$entity]);
 
+        if (!empty($this->config['delete']['is_granted'])) {
+            $this->denyAccessUnlessGranted($this->config['delete']['is_granted'], $entity, sprintf('Access denied, user is not %s.', $this->config['delete']['is_granted']));
+        }
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Entity not found');
+        }
+
         if (!$this->deleteForm instanceof AdminEntityDeleteFormInterface) {
             throw new \InvalidArgumentException(sprintf('Delete form must be an instance of %s', AdminEntityDeleteFormInterface::class));
         }
@@ -274,6 +298,10 @@ class EntityController extends AbstractController
     {
         if (empty($this->config['list'])) {
             throw new \InvalidArgumentException('List action configuration is empty');
+        }
+
+        if (!empty($this->config['list']['is_granted'])) {
+            $this->denyAccessUnlessGranted($this->config['list']['is_granted'], null, sprintf('Access denied, user is not %s.', $this->config['list']['is_granted']));
         }
 
         $repo = $this->manager->getRepository();
