@@ -4,11 +4,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.0",
-        "softspring/core-bundle": "*",
-        "softspring/extra-bundle": "*"
-    },
-    "suggest": {
-        "softspring/core-bundle": "Use softspring core bundle"
+        "softspring/core-bundle": "*"
     },
     "autoload": {
         "psr-4": {
