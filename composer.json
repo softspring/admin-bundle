@@ -11,6 +11,12 @@
             "Softspring\\AdminBundle\\": ""
         }
     },
+    "suggest": {
+        "javihgil/doctrine-pagination-bundle": "Paginate doctrine repositories easily."
+    },
+    "conflict": {
+        "javihgil/doctrine-pagination-bundle": "1.0.*"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
