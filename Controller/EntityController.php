@@ -2,7 +2,7 @@
 
 namespace Softspring\AdminBundle\Controller;
 
-use Jhg\DoctrinePagination\ORM\PaginatedRepository;
+use Jhg\DoctrinePagination\ORM\PaginatedRepositoryInterface;
 use Softspring\AdminBundle\Event\GetResponseEntityEvent;
 use Softspring\AdminBundle\Event\GetResponseFormEvent;
 use Softspring\AdminBundle\Form\AdminEntityCreateFormInterface;
@@ -319,15 +319,18 @@ class EntityController extends AbstractController
             // filter form
             $form = $this->createForm(get_class($this->listFilterForm))->handleRequest($request);
             $filters = $form->isSubmitted() && $form->isValid() ? array_filter($form->getData()) : [];
-
-            // get results
-            if ($repo instanceof PaginatedRepository) {
-                $entities = $repo->findPageBy($page, $rpp, $filters, $orderSort);
-            } else {
-                $entities = $repo->findBy($filters, $orderSort, $rpp, ($page - 1) * $rpp);
-            }
         } else {
-            $entities = $repo->findAll();
+            $page = 1;
+            $rpp = -1;
+            $orderSort = null;
+            $filters = [];
+        }
+
+        // get results
+        if ($repo instanceof PaginatedRepositoryInterface) {
+            $entities = $repo->findPageBy($page, $rpp, $filters, $orderSort);
+        } else {
+            $entities = $repo->findBy($filters, $orderSort, $rpp, ($page - 1) * $rpp);
         }
 
         // show view
