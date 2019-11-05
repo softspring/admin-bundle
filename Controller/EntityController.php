@@ -13,6 +13,7 @@ use Softspring\AdminBundle\Manager\AdminEntityManagerInterface;
 use Softspring\CoreBundle\Controller\AbstractController;
 use Softspring\CoreBundle\Event\ViewEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -321,8 +322,9 @@ class EntityController extends AbstractController
             $filters = $form->isSubmitted() && $form->isValid() ? array_filter($form->getData()) : [];
         } else {
             $page = 1;
-            $rpp = -1;
+            $rpp = null;
             $orderSort = null;
+            $form = null;
             $filters = [];
         }
 
@@ -336,11 +338,13 @@ class EntityController extends AbstractController
         // show view
         $viewData = new \ArrayObject([
             'entities' => $entities,
-            'filterForm' => $form->createView(),
+            'filterForm' => $form instanceof FormInterface ? $form->createView() : null,
             'read_route' => $this->config['list']['read_route'] ?? null,
         ]);
 
-        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['list']['view_event_name']);
+        if (isset($this->config['list']['view_event_name'])) {
+            $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['list']['view_event_name']);
+        }
 
         if ($request->isXmlHttpRequest()) {
             return $this->render($this->config['list']['view_page'], $viewData->getArrayCopy());
