@@ -129,7 +129,9 @@ class EntityController extends AbstractController
             'form' => $form->createView(),
         ]);
 
-        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['create']['view_event_name']);
+        if (isset($this->config['create']['view_event_name'])) {
+            $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['create']['view_event_name']);
+        }
 
         return $this->render($this->config['create']['view'], $viewData->getArrayCopy());
     }
@@ -161,7 +163,9 @@ class EntityController extends AbstractController
             'entity' => $entity,
         ]);
 
-        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['read']['view_event_name']);
+        if (isset($this->config['read']['view_event_name'])) {
+            $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['read']['view_event_name']);
+        }
 
         return $this->render($this->config['read']['view'], $viewData->getArrayCopy());
     }
@@ -223,7 +227,9 @@ class EntityController extends AbstractController
             'entity' => $entity,
         ]);
 
-        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['update']['view_event_name']);
+        if (isset($this->config['update']['view_event_name'])) {
+            $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['update']['view_event_name']);
+        }
 
         return $this->render($this->config['update']['view'], $viewData->getArrayCopy());
     }
@@ -285,7 +291,9 @@ class EntityController extends AbstractController
             'entity' => $entity,
         ]);
 
-        $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['delete']['view_event_name']);
+        if (isset($this->config['delete']['view_event_name'])) {
+            $this->eventDispatcher->dispatch(new ViewEvent($viewData), $this->config['delete']['view_event_name']);
+        }
 
         return $this->render($this->config['delete']['view'], $viewData->getArrayCopy());
     }
