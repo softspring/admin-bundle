@@ -11,6 +11,7 @@ use Softspring\AdminBundle\Form\AdminEntityListFilterFormInterface;
 use Softspring\AdminBundle\Form\AdminEntityUpdateFormInterface;
 use Softspring\AdminBundle\Manager\AdminEntityManagerInterface;
 use Softspring\CoreBundle\Controller\AbstractController;
+use Softspring\CoreBundle\Event\GetResponseEvent;
 use Softspring\CoreBundle\Event\ViewEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -311,6 +312,10 @@ class EntityController extends AbstractController
 
         if (!empty($this->config['list']['is_granted'])) {
             $this->denyAccessUnlessGranted($this->config['list']['is_granted'], null, sprintf('Access denied, user is not %s.', $this->config['list']['is_granted']));
+        }
+
+        if (!empty($this->config['list']['initialize_event_name']) && $response = $this->dispatchGetResponse($this->config['list']['initialize_event_name'], new GetResponseEvent($request))) {
+            return $response;
         }
 
         $repo = $this->manager->getRepository();
