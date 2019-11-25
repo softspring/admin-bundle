@@ -99,28 +99,36 @@ class EntityController extends AbstractController
 
         $newEntity = $this->manager->createEntity();
 
-        if ($response = $this->dispatchGetResponse($this->config['create']['initialize_event_name'], new GetResponseEntityEvent($newEntity, $request))) {
-            return $response;
+        if (isset($this->config['create']['initialize_event_name'])) {
+            if ($response = $this->dispatchGetResponse($this->config['create']['initialize_event_name'], new GetResponseEntityEvent($newEntity, $request))) {
+                return $response;
+            }
         }
 
         $form = $this->createForm(get_class($this->createForm), $newEntity, ['method' => 'POST'])->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if ($response = $this->dispatchGetResponse($this->config['create']['form_valid_event_name'], new GetResponseFormEvent($form, $request))) {
-                    return $response;
+                if (isset($this->config['create']['form_valid_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['create']['form_valid_event_name'], new GetResponseFormEvent($form, $request))) {
+                        return $response;
+                    }
                 }
 
                 $this->manager->saveEntity($newEntity);
 
-                if ($response = $this->dispatchGetResponse($this->config['create']['success_event_name'], new GetResponseEntityEvent($newEntity, $request))) {
-                    return $response;
+                if (isset($this->config['create']['success_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['create']['success_event_name'], new GetResponseEntityEvent($newEntity, $request))) {
+                        return $response;
+                    }
                 }
 
                 return $this->redirect(!empty($this->config['create']['success_redirect_to']) ? $this->generateUrl($this->config['create']['success_redirect_to']) : '/');
             } else {
-                if ($response = $this->dispatchGetResponse($this->config['create']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
-                    return $response;
+                if (isset($this->config['create']['form_invalid_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['create']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
+                        return $response;
+                    }
                 }
             }
         }
@@ -196,28 +204,36 @@ class EntityController extends AbstractController
             throw new \InvalidArgumentException(sprintf('Update form must be an instance of %s', AdminEntityUpdateFormInterface::class));
         }
 
-        if ($response = $this->dispatchGetResponse($this->config['update']['initialize_event_name'], new GetResponseEntityEvent($entity, $request))) {
-            return $response;
+        if (isset($this->config['update']['initialize_event_name'])) {
+            if ($response = $this->dispatchGetResponse($this->config['update']['initialize_event_name'], new GetResponseEntityEvent($entity, $request))) {
+                return $response;
+            }
         }
 
         $form = $this->createForm(get_class($this->updateForm), $entity, ['method' => 'POST'])->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if ($response = $this->dispatchGetResponse($this->config['update']['form_valid_event_name'], new GetResponseFormEvent($form, $request))) {
-                    return $response;
+                if (isset($this->config['update']['form_valid_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['update']['form_valid_event_name'], new GetResponseFormEvent($form, $request))) {
+                        return $response;
+                    }
                 }
 
                 $this->manager->saveEntity($entity);
 
-                if ($response = $this->dispatchGetResponse($this->config['update']['success_event_name'], new GetResponseEntityEvent($entity, $request))) {
-                    return $response;
+                if (isset($this->config['update']['success_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['update']['success_event_name'], new GetResponseEntityEvent($entity, $request))) {
+                        return $response;
+                    }
                 }
 
                 return $this->redirect(!empty($this->config['update']['success_redirect_to']) ? $this->generateUrl($this->config['update']['success_redirect_to']) : '/');
             } else {
-                if ($response = $this->dispatchGetResponse($this->config['update']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
-                    return $response;
+                if (isset($this->config['update']['form_invalid_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['update']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
+                        return $response;
+                    }
                 }
             }
         }
@@ -260,28 +276,36 @@ class EntityController extends AbstractController
             throw new \InvalidArgumentException(sprintf('Delete form must be an instance of %s', AdminEntityDeleteFormInterface::class));
         }
 
-        if ($response = $this->dispatchGetResponse($this->config['delete']['initialize_event_name'], new GetResponseEntityEvent($entity, $request))) {
-            return $response;
+        if (isset($this->config['delete']['initialize_event_name'])) {
+            if ($response = $this->dispatchGetResponse($this->config['delete']['initialize_event_name'], new GetResponseEntityEvent($entity, $request))) {
+                return $response;
+            }
         }
 
         $form = $this->createForm(get_class($this->deleteForm), $entity, ['method' => 'POST'])->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if ($response = $this->dispatchGetResponse($this->config['delete']['form_valid_event_name'], new GetResponseFormEvent($form, $request))) {
-                    return $response;
+                if (isset($this->config['delete']['form_valid_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['delete']['form_valid_event_name'], new GetResponseFormEvent($form, $request))) {
+                        return $response;
+                    }
                 }
 
-                $this->remove($entity, true);
+                $this->remove($entity, null, true);
 
-                if ($response = $this->dispatchGetResponse($this->config['delete']['success_event_name'], new GetResponseEntityEvent($entity, $request))) {
-                    return $response;
+                if (isset($this->config['delete']['success_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['delete']['success_event_name'], new GetResponseEntityEvent($entity, $request))) {
+                        return $response;
+                    }
                 }
 
                 return $this->redirect(!empty($this->config['delete']['success_redirect_to']) ? $this->generateUrl($this->config['delete']['success_redirect_to']) : '/');
             } else {
-                if ($response = $this->dispatchGetResponse($this->config['delete']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
-                    return $response;
+                if (isset($this->config['delete']['form_invalid_event_name'])) {
+                    if ($response = $this->dispatchGetResponse($this->config['delete']['form_invalid_event_name'], new GetResponseFormEvent($form, $request))) {
+                        return $response;
+                    }
                 }
             }
         }
