@@ -360,7 +360,7 @@ class EntityController extends AbstractController
         } else {
             $page = 1;
             $rpp = null;
-            $orderSort = null;
+            $orderSort = $this->config['list']['default_order_sort'] ?? null;
             $form = null;
             $filters = [];
         }
