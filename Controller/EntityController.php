@@ -10,18 +10,18 @@ use Softspring\AdminBundle\Form\AdminEntityDeleteFormInterface;
 use Softspring\AdminBundle\Form\AdminEntityListFilterFormInterface;
 use Softspring\AdminBundle\Form\AdminEntityUpdateFormInterface;
 use Softspring\AdminBundle\Manager\AdminEntityManagerInterface;
-use Softspring\CoreBundle\Controller\AbstractController;
 use Softspring\CoreBundle\Event\GetResponseEvent;
 use Softspring\CoreBundle\Event\ViewEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Softspring\CrudlBundle\Controller\CrudlController;use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Entity CRUDL controller (CRUD+listing)
+ * @deprecated Use CrudlController from SfsCrudlBundle before 1.1
  */
-class EntityController extends AbstractController
+class EntityController extends CrudlController
 {
     /**
      * @var AdminEntityManagerInterface
@@ -82,6 +82,8 @@ class EntityController extends AbstractController
     /**
      * @param Request $request
      * @return Response
+     *
+     * @deprecated Use CrudlController from SfsCrudlBundle before 1.1
      */
     public function create(Request $request): Response
     {
@@ -149,6 +151,8 @@ class EntityController extends AbstractController
      * @param string $entity
      * @param Request $request
      * @return Response
+     *
+     * @deprecated Use CrudlController from SfsCrudlBundle before 1.1
      */
     public function read(string $entity, Request $request): Response
     {
@@ -183,6 +187,8 @@ class EntityController extends AbstractController
      * @param string $entity
      * @param Request $request
      * @return Response
+     *
+     * @deprecated Use CrudlController from SfsCrudlBundle before 1.1
      */
     public function update(string $entity, Request $request): Response
     {
@@ -255,6 +261,8 @@ class EntityController extends AbstractController
      * @param string $entity
      * @param Request $request
      * @return Response
+     *
+     * @deprecated Use CrudlController from SfsCrudlBundle before 1.1
      */
     public function delete(string $entity, Request $request): Response
     {
@@ -327,6 +335,8 @@ class EntityController extends AbstractController
      * @param Request $request
      *
      * @return Response
+     *
+     * @deprecated Use CrudlController from SfsCrudlBundle before 1.1
      */
     public function list(Request $request): Response
     {

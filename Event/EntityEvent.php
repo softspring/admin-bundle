@@ -2,46 +2,12 @@
 
 namespace Softspring\AdminBundle\Event;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Contracts\EventDispatcher\Event;
+use Softspring\CrudlBundle\Event\EntityEvent as CrudlEntityEvent;
 
-class EntityEvent extends Event
+/**
+ * @deprecated Use SfsCrudlBundle before 1.1
+ */
+class EntityEvent extends CrudlEntityEvent
 {
-    /**
-     * @var object
-     */
-    protected $entity;
 
-    /**
-     * @var Request|null
-     */
-    protected $request;
-
-    /**
-     * AccountEvent constructor.
-     *
-     * @param object $entity
-     * @param Request|null  $request
-     */
-    public function __construct($entity, ?Request $request)
-    {
-        $this->entity = $entity;
-        $this->request = $request;
-    }
-
-    /**
-     * @return object
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    /**
-     * @return Request|null
-     */
-    public function getRequest(): ?Request
-    {
-        return $this->request;
-    }
 }

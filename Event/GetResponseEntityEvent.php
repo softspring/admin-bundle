@@ -2,10 +2,12 @@
 
 namespace Softspring\AdminBundle\Event;
 
-use Softspring\CoreBundle\Event\GetResponseEventInterface;
-use Softspring\CoreBundle\Event\GetResponseTrait;
+use Softspring\CrudlBundle\Event\GetResponseEntityEvent as CrudlGetResponseEntityEvent;
 
-class GetResponseEntityEvent extends EntityEvent implements GetResponseEventInterface
+/**
+ * @deprecated Use SfsCrudlBundle before 1.1
+ */
+class GetResponseEntityEvent extends CrudlGetResponseEntityEvent
 {
-    use GetResponseTrait;
+
 }

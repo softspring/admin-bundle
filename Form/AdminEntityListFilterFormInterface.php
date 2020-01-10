@@ -2,46 +2,12 @@
 
 namespace Softspring\AdminBundle\Form;
 
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Softspring\CrudlBundle\Form\EntityListFilterFormInterface;
 
-interface AdminEntityListFilterFormInterface extends FormTypeInterface
+/**
+ * @deprecated Use SfsCrudlBundle before 1.1
+ */
+interface AdminEntityListFilterFormInterface extends EntityListFilterFormInterface
 {
-    /**
-     * @param Request $request
-     * @return int
-     */
-    public function getPage(Request $request): int;
 
-    /**
-     * @param Request $request
-     * @return int
-     */
-    public function getRpp(Request $request): int;
-
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function getOrder(Request $request): array;
-
-    /**
-     * @return string
-     */
-    public static function getPageParamName(): string;
-
-    /**
-     * @return string
-     */
-    public static function getRppParamName(): string;
-
-    /**
-     * @return string
-     */
-    public static function getOrderFieldParamName(): string;
-
-    /**
-     * @return string
-     */
-    public static function getOrderDirectionParamName(): string;
 }
