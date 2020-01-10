@@ -4,7 +4,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.0",
-        "softspring/core-bundle": "*"
+        "softspring/core-bundle": "*",
+        "softspring/crudl-bundle": "*"
     },
     "autoload": {
         "psr-4": {
