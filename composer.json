@@ -3,9 +3,7 @@
     "description": "This bundle provides admin basic features.",
     "license": "MIT",
     "require": {
-        "php": "^7.0",
-        "softspring/core-bundle": "*",
-        "softspring/crudl-bundle": "*"
+        "php": "^7.0"
     },
     "autoload": {
         "psr-4": {
@@ -13,14 +11,12 @@
         }
     },
     "suggest": {
-        "javihgil/doctrine-pagination-bundle": "Paginate doctrine repositories easily."
-    },
-    "conflict": {
-        "javihgil/doctrine-pagination-bundle": "1.0.*"
+        "javihgil/core-bundle": "Symfony common features.",
+        "javihgil/crudl-bundle": "Create CRUD+list features."
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.1-dev"
         }
     }
 }
