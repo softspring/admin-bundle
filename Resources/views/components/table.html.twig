@@ -1,0 +1,25 @@
+{% if collection is not defined or collection|length %}
+    <table class="table {{ classes is not defined ? 'table-striped table-hover' : classes }} border-bottom">
+        {% block thead %}
+            <thead>
+            <tr>
+                {% block ths %}
+                {% endblock ths %}
+            </tr>
+            </thead>
+        {% endblock thead %}
+
+        {% block tbody %}
+        {% endblock tbody %}
+
+        {% block tfooter %}
+        {% endblock tfooter %}
+    </table>
+{% else %}
+    {% block empty %}
+        <div class="p-5 m-5">
+            <p class="text-center text-muted">The list is empty</p>
+        </div>
+    {% endblock empty %}
+{% endif %}
+
