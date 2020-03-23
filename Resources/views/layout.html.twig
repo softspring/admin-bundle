@@ -1,11 +1,26 @@
 {% extends ['@SfsCore/base.html.twig', 'base.html.twig'] %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css" />
+{% endblock stylesheets %}
+
 {% block body %}
-    <div class="container-fluid row">
-        <div class="col-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom">
+        <div class="d-flex align-items-center">
+            <div class="sidebar-toggle-wrap d-lg-none mr-2">
+                <button type="button" data-toggle="sidebar" class="py-0 btn btn-clean">
+                    <span class="mdi mdi-24px mdi-menu"></span>
+                </button>
+            </div>
+            <a class="navbar-brand" href="/admin"><img src="https://dummyimage.com/100x35/ffffff/007bff.jpg?text=LOGO" height="35" alt="logo"/></a>
+        </div>
+    </nav>
+    <div class="container-fluid row mt-5 pt-5">
+        <div class="col-2">
             {% include '@SfsAdmin/partials/sidebar.html.twig' %}
         </div>
-        <section id="main-content" class="col-9">
+        <section id="main-content" class="col">
             {% block content %}
             {% endblock content %}
         </section>
