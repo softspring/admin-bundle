@@ -6,23 +6,71 @@
 {% endblock stylesheets %}
 
 {% block body %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom">
-        <div class="d-flex align-items-center">
-            <div class="sidebar-toggle-wrap d-lg-none mr-2">
-                <button type="button" data-toggle="sidebar" class="py-0 btn btn-clean">
-                    <span class="mdi mdi-24px mdi-menu"></span>
-                </button>
+    <div class="bg-light h-100 pt-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top border-bottom">
+            <div class="d-flex align-items-center">
+                <div class="sidebar-toggle-wrap d-lg-none mr-2">
+                    <button type="button" data-toggle="sidebar" class="py-0 btn btn-clean">
+                        <span class="mdi mdi-24px mdi-menu"></span>
+                    </button>
+                </div>
+                <a class="navbar-brand" href="/admin"><img src="https://dummyimage.com/100x35/007bff/ffffff.png?text=SFs5" height="35" alt="logo"/></a>
             </div>
-            <a class="navbar-brand" href="/admin"><img src="https://dummyimage.com/100x35/ffffff/007bff.jpg?text=LOGO" height="35" alt="logo"/></a>
+
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light">
+                        <i class="fab fa-google-plus-g"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="rounded-circle">
+                            <img alt="{{ app.user.username }}" src="https://dummyimage.com/30x30/ffffff/007bff.png?text=" class="rounded-circle" />
+                        </span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right animated fadeIn">
+                        <li><a class="dropdown-item" href="{{ url('sfs_user_preferences') }}"><span class="icon icon-uniE880"></span> Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ url('sfs_user_change_password') }}"><span class="icon icon-lock" aria-hidden="true"></span> Change password</a></li>
+                        <li><a class="dropdown-item disabled" href="#"><span class="icon icon-settings01"></span> Settings</a></li>
+                        <li><div class="dropdown-divider"></div></li>
+                        <li><a class="dropdown-item" href="{{ url('sfs_user_logout') }}"><span class="icon icon-power"></span> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="page-container row-fluid container-fluid row pt-3 h-100">
+            <div class="col-2 bg-white h-100">
+                {% block sidebar %}
+                    <div class="page-sidebar-wrapper" id="main-menu-wrapper">
+                        {% include admin_menu._view|default('@SfsAdmin/partials/sidebar-list.html.twig') %}
+                    </div>
+                {% endblock sidebar %}
+            </div>
+            <section id="main-content" class="col w-100 pt-2 pl-5 pr-5 pb-5">
+                {% block breadcrumbs %}
+                    <small>
+                    <nav aria-label="breadcrumb mb-5">
+                        <ol class="breadcrumb bg-transparent pl-0">
+                            {% block breadcrums_content %}
+                                <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+{#                                <li class="breadcrumb-item"><a href="#">Level 1</a></li>#}
+{#                                <li class="breadcrumb-item active" aria-current="page">Last level</li>#}
+                            {% endblock breadcrums_content %}
+                        </ol>
+                    </nav>
+                    </small>
+                {% endblock breadcrumbs %}
+                {% block content %}
+                {% endblock content %}
+            </section>
         </div>
-    </nav>
-    <div class="container-fluid row mt-5 pt-5">
-        <div class="col-2">
-            {% include '@SfsAdmin/partials/sidebar.html.twig' %}
-        </div>
-        <section id="main-content" class="col">
-            {% block content %}
-            {% endblock content %}
-        </section>
     </div>
 {% endblock body %}

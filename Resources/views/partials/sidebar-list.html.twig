@@ -1,0 +1,23 @@
+{% trans_default_domain 'sfs_admin' %}
+<ul class="wraplist">
+    {% set translation_domain = admin_menu._translation_domain|default('sfs_admin') %}
+    {% set active_for_routes_class = admin_menu._active_for_routes_class|default('active') %}
+    {% for key, block in admin_menu|default([])|filter((block, key) => not (key starts with '_') ) %}
+        {% if block|default([])|filter((element, key) => key != 'translation_key')|filter( (element, key) => route_defined(element.route) and (not (element.role|default(false)) or is_granted(element.role)))|length  %}
+            <li class="menusection">{{ block.translation_key|default(key)|trans({}, translation_domain) }}</li>
+
+            {% for key, element in block|default([])|filter((element, key) => key != 'translation_key') %}
+                {% if route_defined(element.route) and (not (element.role|default(false)) or is_granted(element.role)) %}
+                    <li class="">
+                        <a class="{{ activeForRoutes(element.active_expression, null, active_for_routes_class) }}" href="{{ url(element.route) }}">
+                            {% if element.icon|default(false) %}
+                                <span class="{{ element.icon }}"></span>
+                            {% endif %}
+                            <span class="title">{{ element.translation_key|default(key)|trans({}, translation_domain) }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</ul>

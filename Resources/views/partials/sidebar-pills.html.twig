@@ -1,10 +1,10 @@
 {% trans_default_domain 'sfs_admin' %}
-<div class="nav-pills p-0">
+<div class="nav-pills p-0 m-0">
     {% set translation_domain = admin_menu._translation_domain|default('sfs_admin') %}
     {% set active_for_routes_class = admin_menu._active_for_routes_class|default('active') %}
     {% for key, block in admin_menu|default([])|filter((block, key) => not (key starts with '_') ) %}
         {% if block|default([])|filter((element, key) => key != 'translation_key')|filter( (element, key) => route_defined(element.route) and (not (element.role|default(false)) or is_granted(element.role)))|length  %}
-            <div class="nav-link text-uppercase">{{ block.translation_key|default(key)|trans({}, translation_domain) }}</div>
+            <div class="nav-link text-lowercase text-muted" style="font-variant: small-caps">{{ block.translation_key|default(key)|trans({}, translation_domain) }}</div>
 
             {% for key, element in block|default([])|filter((element, key) => key != 'translation_key') %}
                 {% if route_defined(element.route) and (not (element.role|default(false)) or is_granted(element.role)) %}
