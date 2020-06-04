@@ -1,0 +1,16 @@
+<div class="pager-cont d-flex justify-content-end">
+    {% if collection.prevPage|default(false) %}
+    <a class="float-left" href="{{ url(pagination_route, app.request.query.all|merge({ page: collection.prevPage })) }}" title="Prev page"><span class="mdi mdi-24px mdi-chevron-left"></span></a>
+    {% endif %}
+    {% set max = (collection.total/collection.rpp)|round(0, 'ceil') %}
+    {% if max > 1 %}
+    <ul class="list-unstyled d-flex align-items-center m-0">
+        {% for i in 1..max %}
+            <li><a class="text-primary mx-2 p-2" href="{{ url(pagination_route, app.request.query.all|merge({ page: i })) }}" title="Page {{ i }}">{{ i }} </a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if collection.nextPage|default(false) %}
+        <a class="float-right" href="{{ url(pagination_route, app.request.query.all|merge({ page: collection.nextPage })) }}" title="Next page"><span class="mdi mdi-24px mdi-chevron-right"></span></a>
+    {% endif %}
+</div>
