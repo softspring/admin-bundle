@@ -27,7 +27,7 @@
 {% else %}
     {% block empty %}
         <div class="p-5 m-5">
-            <p class="text-center text-muted">The list is empty</p>
+            <p class="text-center text-muted">{{ empty_message|default('The list is empty') }}</p>
         </div>
     {% endblock empty %}
 {% endif %}
