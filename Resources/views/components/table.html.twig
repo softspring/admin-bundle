@@ -10,6 +10,19 @@
         {% endblock thead %}
 
         {% block tbody %}
+            <tbody>
+            {% for element in collection %}
+                {# TODO: make row clickable url configurable #}
+                <tr>
+                    {% block tds %}
+                        {# use element variable to show row data #}
+                    {% endblock tds %}
+
+                    {% block actions %}
+                    {% endblock actions %}
+                </tr>
+            {% endfor %}
+            </tbody>
         {% endblock tbody %}
 
         {% block tfooter %}
