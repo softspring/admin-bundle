@@ -30,7 +30,7 @@
             <tfoot>
             <tr>
                 <td colspan="20">
-                {% include '@SfsAdmin/components/pager.html.twig' with {'collection':collection, 'pagination_route': pagination_route|default(false)} %}
+                {% include '@SfsAdmin/components/pager.html.twig' with {'collection':collection, 'pagination_route': pagination_route|default(false), 'pagination_route_attributes': pagination_route_attributes|default([])} %}
                 </td>
             </tr>
             </tfoot>
