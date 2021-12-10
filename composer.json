@@ -1,7 +1,9 @@
 {
     "name": "softspring/admin-bundle",
     "description": "This bundle provides admin basic features.",
+    "type": "symfony-bundle",
     "license": "MIT",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=7.4"
     },
