@@ -3,7 +3,7 @@
     "description": "This bundle provides admin basic features.",
     "license": "MIT",
     "require": {
-        "php": "^7.0"
+        "php": "^7.4"
     },
     "autoload": {
         "psr-4": {
