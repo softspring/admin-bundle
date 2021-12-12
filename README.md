@@ -5,7 +5,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/softspring/admin-bundle/v/unstable.svg)](https://packagist.org/packages/softspring/admin-bundle)
 [![License](https://poser.pugx.org/softspring/admin-bundle/license.svg)](https://packagist.org/packages/softspring/admin-bundle)
 [![Total Downloads](https://poser.pugx.org/softspring/admin-bundle/downloads)](https://packagist.org/packages/softspring/admin-bundle)
-[![Build status](https://app.travis-ci.com/github/softspring/admin-bundle.svg?branch=master)](https://app.travis-ci.com/github/softspring/admin-bundle)
+[![Build status](https://travis-ci.com/softspring/admin-bundle.svg?branch=master)](https://app.travis-ci.com/github/softspring/admin-bundle)
 
 # Installation
 
