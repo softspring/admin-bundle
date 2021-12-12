@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Softspring\\AdminBundle\\": "src"
+            "Softspring\\AdminBundle\\": "src/"
         }
     },
     "suggest": {
