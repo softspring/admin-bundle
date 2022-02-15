@@ -17,10 +17,8 @@ class SfsAdminExtension extends Extension implements PrependExtensionInterface
 
     public function prepend(ContainerBuilder $container)
     {
-        $container->prependExtensionConfig('sfs_core', [
-            'twig' => [
-                'active_for_routes_extension' => true,
-            ],
+        $container->prependExtensionConfig('sfs_twig_extra', [
+            'routing_extension' => true,
         ]);
     }
 }
