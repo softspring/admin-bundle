@@ -7,7 +7,7 @@
 
         {% for element in sidebar_block.elements %}
             <li class="">
-                <a class="{{ activeForRoutes(element.active_expression, null, active_for_routes_class) }}" href="{{ url(element.route) }}">
+                <a class="{{ active_for_routes(element.active_expression, null, active_for_routes_class) }}" href="{{ url(element.route) }}">
                     {% if element.icon|default(false) %}
                         <span class="{{ element.icon }}"></span>
                     {% endif %}
