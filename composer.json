@@ -22,8 +22,5 @@
         "javihgil/crudl-bundle": "Create CRUD+list features."
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "4.1-dev"
-        }
     }
 }
