@@ -1,5 +1,5 @@
 {% if collection is not defined or collection|length %}
-    <table class="table {{ classes is not defined ? 'table-striped table-hover' : classes }}">
+    <table class="table {{ classes is not defined ? 'table-borderless table-striped table-hover ' ~ (append_classes|default(''))  : classes }}">
         {% block thead %}
             <thead>
             <tr>

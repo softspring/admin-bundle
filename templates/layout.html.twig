@@ -1,77 +1,74 @@
 {% extends ['@SfsCore/base.html.twig', 'base.html.twig'] %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css" />
-{% endblock stylesheets %}
-
 {% block body %}
-    <div class="bg-light h-100 pt-5">
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top border-bottom">
-            <div class="d-flex align-items-center">
-                <div class="sidebar-toggle-wrap d-lg-none mr-2">
-                    <button type="button" data-toggle="sidebar" class="py-0 btn btn-clean">
-                        <span class="mdi mdi-24px mdi-menu"></span>
-                    </button>
+    <div class="d-flex flex-col align-items-stretch vh-100 pt-5">
+        <header class="flex-fill p-3 bg-primary fixed-top border-bottom">
+        <div class="container-fluid">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/admin" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <img src="https://dummyimage.com/100x35/0d6efd/ffffff.png?text=LOGO" height="35" alt="logo"/>
+                </a>
+
+                <div class="col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 </div>
-                {% block sidebar_title %}<a class="navbar-brand" href="/admin"><img src="https://dummyimage.com/100x35/007bff/ffffff.png?text=LOGO" height="35" alt="logo"/>{% endblock sidebar_title %}</a>
-            </div>
 
-            <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fab fa-twitter"></i>
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if sfs_user_is('avatar') %}
+                            <img alt="{{ app.user.displayName }}" src="{{ app.user.avatarUrl }}" width="32" height="32" class="rounded-circle me-2">
+                        {% endif %}
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fab fa-google-plus-g"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="rounded-circle">
-                            <img alt="{{ app.user.username }}" src="https://dummyimage.com/30x30/ffffff/007bff.png?text=" class="rounded-circle" />
-                        </span>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-right animated fadeIn">
-                        <li><a class="dropdown-item" href="{{ url('sfs_user_preferences') }}"><span class="icon icon-uniE880"></span> Profile</a></li>
-                        <li><a class="dropdown-item" href="{{ url('sfs_user_change_password') }}"><span class="icon icon-lock" aria-hidden="true"></span> Change password</a></li>
-                        <li><a class="dropdown-item disabled" href="#"><span class="icon icon-settings01"></span> Settings</a></li>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 34px);">
+                        {% if route_defined('sfs_user_preferences') %}
+                            <li><a class="dropdown-item" href="{{ url('sfs_user_preferences') }}"><span class="icon icon-uniE880"></span> Profile</a></li>
+                        {% endif %}
+                        {% if route_defined('sfs_user_change_password') %}
+                            <li><a class="dropdown-item" href="{{ url('sfs_user_change_password') }}"><span class="icon icon-uniE880"></span> Change password</a></li>
+                        {% endif %}
                         <li><div class="dropdown-divider"></div></li>
                         <li><a class="dropdown-item" href="{{ url('sfs_user_logout') }}"><span class="icon icon-power"></span> Logout</a></li>
                     </ul>
-                </li>
-            </ul>
-        </nav>
-
-        <div class="page-container row-fluid container-fluid row pt-3 h-100">
-            <div class="col-2 bg-white h-100">
-                {% block sidebar %}
-                    <div class="page-sidebar-wrapper" id="main-menu-wrapper">
-                        {% include admin_menu._view|default('@SfsAdmin/partials/sidebar-list.html.twig') %}
-                    </div>
-                {% endblock sidebar %}
+                </div>
             </div>
-            <section id="main-content" class="col w-100 pt-2 pl-5 pr-5 pb-5">
-                {% block breadcrumbs %}
-                    <small>
-                    <nav aria-label="breadcrumb mb-5">
-                        <ol class="breadcrumb bg-transparent pl-0">
-                            {% block breadcrums_content %}
-                                <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-{#                                <li class="breadcrumb-item"><a href="#">Level 1</a></li>#}
-{#                                <li class="breadcrumb-item active" aria-current="page">Last level</li>#}
-                            {% endblock breadcrums_content %}
-                        </ol>
-                    </nav>
-                    </small>
-                {% endblock breadcrumbs %}
-                {% block content %}
-                {% endblock content %}
-            </section>
         </div>
+    </header>
+        <main class="flex-fill d-flex flex-row align-items-stretch bg-light h-100">
+
+
+            <div class="page-container row-fluid container-fluid row pt-4 h-100">
+                <div class="col-2 bg-white h-100">
+                    {% block sidebar %}
+                        <div class="page-sidebar-wrapper" id="main-menu-wrapper">
+                            {% include admin_menu._view|default('@SfsAdmin/partials/sidebar-list.html.twig') %}
+                        </div>
+                    {% endblock sidebar %}
+                </div>
+                <section id="main-content" class="col w-100 pt-2 pl-5 pr-5 pb-5">
+                    {% block breadcrumbs %}
+                        <small>
+                            <nav aria-label="breadcrumb mb-5">
+                                <ol class="breadcrumb bg-transparent pl-0">
+                                    {% block breadcrums_content %}
+                                        <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                                        {#                                <li class="breadcrumb-item"><a href="#">Level 1</a></li>#}
+                                        {#                                <li class="breadcrumb-item active" aria-current="page">Last level</li>#}
+                                    {% endblock breadcrums_content %}
+                                </ol>
+                            </nav>
+                        </small>
+                    {% endblock breadcrumbs %}
+                    {% block content %}
+                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                    {% endblock content %}
+                </section>
+            </div>
+        </main>
     </div>
 
     {% include '@SfsCore/components/flash-message-alerts.html.twig' %}
