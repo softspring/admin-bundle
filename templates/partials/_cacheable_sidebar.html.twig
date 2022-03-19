@@ -3,20 +3,22 @@
 {% set cacheable = admin_menu._cacheable|default(false) %}
 {% set translation_domain = admin_menu._translation_domain|default('sfs_admin') %}
 {% set active_for_routes_class = admin_menu._active_for_routes_class|default('active') %}
+{% set show_not_granted = admin_menu._show_not_granted|default(false) %}
 
 {% if not cacheable or not app.request.session.has('admin_sidebar_cache_for_user') %}
     {% set sidebar_blocks = [] %}
 
     {% for key, block in admin_menu|default([])|filter((block, key) => not (key starts with '_') ) %}
-        {% if block|default([])|filter((element, key) => key != 'translation_key')|filter( (element, key) => route_defined(element.route) and (not (element.role|default(false)) or is_granted(element.role)))|length  %}
+        {% if block|default([])|filter((element, key) => key != 'translation_key')|filter( (element, key) => route_defined(element.route) and (show_not_granted or not (element.role|default(false)) or is_granted(element.role)))|length  %}
             {% set block_elements = [] %}
             {% for key, element in block|default([])|filter((element, key) => key != 'translation_key') %}
-                {% if route_defined(element.route) and (not (element.role|default(false)) or is_granted(element.role)) %}
+                {% if route_defined(element.route) and (show_not_granted or not (element.role|default(false)) or is_granted(element.role)) %}
                     {% set block_elements = block_elements|merge([{
                         'active_expression': element.active_expression,
                         'route': element.route,
                         'icon': element.icon,
                         'text': element.translation_key|default(key)|trans({}, translation_domain),
+                        'enabled': not (element.role|default(false)) or is_granted(element.role)
                     }]) %}
                 {% endif %}
             {% endfor %}

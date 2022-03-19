@@ -7,12 +7,21 @@
 
         {% for element in sidebar_block.elements %}
             <li class="">
-                <a class="{{ active_for_routes(element.active_expression, null, active_for_routes_class) }}" href="{{ url(element.route) }}">
-                    {% if element.icon|default(false) %}
-                        <span class="{{ element.icon }}"></span>
-                    {% endif %}
-                    <span class="title">{{ element.text }}</span>
-                </a>
+                {% if element.enabled %}
+                    <a class="{{ active_for_routes(element.active_expression, null, active_for_routes_class) }}" href="{{ url(element.route) }}">
+                        {% if element.icon|default(false) %}
+                            <span class="{{ element.icon }}"></span>
+                        {% endif %}
+                        <span class="title">{{ element.text }}</span>
+                    </a>
+                {% else %}
+                    <a class="{{ active_for_routes(element.active_expression, null, active_for_routes_class) }} disabled" href="#">
+                        {% if element.icon|default(false) %}
+                            <span class="{{ element.icon }}"></span>
+                        {% endif %}
+                        <span class="title">{{ element.text }}</span>
+                    </a>
+                {% endif %}
             </li>
         {% endfor %}
     {% endfor %}
