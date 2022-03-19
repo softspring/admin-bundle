@@ -1,0 +1,4 @@
+pager:
+    total: "Total:"
+    prev: "Anterior"
+    next: "Siguiente"
