@@ -8,9 +8,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class SfsAdminExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
     }
