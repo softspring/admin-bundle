@@ -2,39 +2,40 @@
 
 {% block body %}
     <div class="d-flex flex-col align-items-stretch vh-100 pt-5">
+        {% block header %}
         <header class="flex-fill p-3 bg-primary fixed-top border-bottom">
-        <div class="container-fluid">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/admin" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <img src="https://dummyimage.com/100x35/0d6efd/ffffff.png?text=LOGO" height="35" alt="logo"/>
-                </a>
-
-                <div class="col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                </div>
-
-                <div class="dropdown text-end">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        {% if sfs_user_is('avatar') %}
-                            <img alt="{{ app.user.displayName }}" src="{{ app.user.avatarUrl }}" width="32" height="32" class="rounded-circle me-2">
-                        {% endif %}
+            <div class="container-fluid">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/admin" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                        <img src="https://dummyimage.com/100x35/0d6efd/ffffff.png?text=LOGO" height="35" alt="logo"/>
                     </a>
-                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 34px);">
-                        {% if route_defined('sfs_user_preferences') %}
-                            <li><a class="dropdown-item" href="{{ url('sfs_user_preferences') }}"><span class="icon icon-uniE880"></span> Profile</a></li>
-                        {% endif %}
-                        {% if route_defined('sfs_user_change_password') %}
-                            <li><a class="dropdown-item" href="{{ url('sfs_user_change_password') }}"><span class="icon icon-uniE880"></span> Change password</a></li>
-                        {% endif %}
-                        <li><div class="dropdown-divider"></div></li>
-                        <li><a class="dropdown-item" href="{{ url('sfs_user_logout') }}"><span class="icon icon-power"></span> Logout</a></li>
-                    </ul>
+
+                    <div class="col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    </div>
+
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if sfs_user_is('avatar') %}
+                                <img alt="{{ app.user.displayName }}" src="{{ app.user.avatarUrl }}" width="32" height="32" class="rounded-circle me-2">
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 34px);">
+                            {% if route_defined('sfs_user_preferences') %}
+                                <li><a class="dropdown-item" href="{{ url('sfs_user_preferences') }}"><span class="icon icon-uniE880"></span> Profile</a></li>
+                            {% endif %}
+                            {% if route_defined('sfs_user_change_password') %}
+                                <li><a class="dropdown-item" href="{{ url('sfs_user_change_password') }}"><span class="icon icon-uniE880"></span> Change password</a></li>
+                            {% endif %}
+                            <li><div class="dropdown-divider"></div></li>
+                            <li><a class="dropdown-item" href="{{ url('sfs_user_logout') }}"><span class="icon icon-power"></span> Logout</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
+        {% endblock header %}
+
         <main class="flex-fill d-flex flex-row align-items-stretch bg-light h-100">
-
-
             <div class="page-container row-fluid container-fluid row pt-4 h-100">
                 <div class="col-2 bg-white h-100">
                     {% block sidebar %}
@@ -50,8 +51,8 @@
                                 <ol class="breadcrumb bg-transparent pl-0">
                                     {% block breadcrums_content %}
                                         <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-                                        {#                                <li class="breadcrumb-item"><a href="#">Level 1</a></li>#}
-                                        {#                                <li class="breadcrumb-item active" aria-current="page">Last level</li>#}
+                                        {# <li class="breadcrumb-item"><a href="#">Level 1</a></li> #}
+                                        {# <li class="breadcrumb-item active" aria-current="page">Last level</li> #}
                                     {% endblock breadcrums_content %}
                                 </ol>
                             </nav>
