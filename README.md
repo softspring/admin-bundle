@@ -5,7 +5,7 @@
 [![License](https://poser.pugx.org/softspring/admin-bundle/license.svg)](https://packagist.org/packages/softspring/admin-bundle)
 [![PHP Version Require](http://poser.pugx.org/softspring/admin-bundle/require/php)](https://packagist.org/packages/softspring/admin-bundle)
 [![Total Downloads](https://poser.pugx.org/softspring/admin-bundle/downloads)](https://packagist.org/packages/softspring/admin-bundle)
-[![Build status](https://travis-ci.com/softspring/admin-bundle.svg?branch=master)](https://app.travis-ci.com/github/softspring/admin-bundle)
+[![Build status](https://github.com/softspring/admin-bundle/actions/workflows/php.yml/badge.svg?branch=5.0)](https://github.com/softspring/admin-bundle/actions/workflows/php.yml)
 
 This package provides a basic admin panel schema.
 
