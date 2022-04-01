@@ -19,7 +19,7 @@
     },
     "suggest": {
         "javihgil/core-bundle": "Symfony common features.",
-        "javihgil/crudl-bundle": "Create CRUD+list features."
+        "javihgil/crudl-controller": "Create CRUD+list features."
     },
     "extra": {
     }
