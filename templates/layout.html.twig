@@ -35,40 +35,38 @@
         </header>
         {% endblock header %}
 
-        <main class="flex-fill d-flex flex-row align-items-stretch bg-light h-100">
-            <div class="page-container row-fluid container-fluid row pt-4 h-100">
-                <div class="col-2 bg-white h-100">
-                    {% block sidebar %}
-                        <div class="page-sidebar-wrapper" id="main-menu-wrapper">
-                            {% include admin_menu._view|default('@SfsAdmin/partials/sidebar-list.html.twig') %}
-                        </div>
-                    {% endblock sidebar %}
-                </div>
-                <section id="main-content" class="col w-100 pt-2 pl-5 pr-5 pb-5">
-                    {% block breadcrumbs %}
-                        <small>
-                            <nav aria-label="breadcrumb mb-5">
-                                <ol class="breadcrumb bg-transparent pl-0">
-                                    {% block breadcrums_content %}
-                                        <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-                                        {# <li class="breadcrumb-item"><a href="#">Level 1</a></li> #}
-                                        {# <li class="breadcrumb-item active" aria-current="page">Last level</li> #}
-                                    {% endblock breadcrums_content %}
-                                </ol>
-                            </nav>
-                        </small>
-                    {% endblock breadcrumbs %}
-                    {% block content %}
-                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
-                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
-                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
-                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
-                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
-                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
-                        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
-                    {% endblock content %}
-                </section>
+        <main class="page-container row-fluid container-fluid row g-0 bg-light">
+            <div class="page-sidebar fixedscroll col-2">
+                {% block sidebar %}
+                    <div class="page-sidebar-wrapper" id="main-menu-wrapper">
+                        {% include admin_menu._view|default('@SfsAdmin/partials/sidebar-list.html.twig') %}
+                    </div>
+                {% endblock sidebar %}
             </div>
+            <section id="main-content" class="col-10 p-5 with-sidebar">
+                {% block breadcrumbs %}
+                    <small>
+                        <nav aria-label="breadcrumb mb-5">
+                            <ol class="breadcrumb bg-transparent pl-0">
+                                {% block breadcrums_content %}
+                                    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                                    {# <li class="breadcrumb-item"><a href="#">Level 1</a></li> #}
+                                    {# <li class="breadcrumb-item active" aria-current="page">Last level</li> #}
+                                {% endblock breadcrums_content %}
+                            </ol>
+                        </nav>
+                    </small>
+                {% endblock breadcrumbs %}
+                {% block content %}
+                    &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                    &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                    &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                    &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                    &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                    &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                    &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+                {% endblock content %}
+            </section>
         </main>
     </div>
 
