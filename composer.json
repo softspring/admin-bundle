@@ -22,5 +22,8 @@
         "javihgil/crudl-controller": "Create CRUD+list features."
     },
     "extra": {
+        "branch-alias": {
+            "dev-5.0": "5.0.x-dev"
+        }
     }
 }
