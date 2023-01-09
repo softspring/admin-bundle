@@ -17,11 +17,5 @@ class SfsAdminExtension extends Extension implements PrependExtensionInterface
         $container->prependExtensionConfig('sfs_twig_extra', [
             'routing_extension' => true,
         ]);
-
-        $container->prependExtensionConfig('twig', [
-            'paths' => [
-                '%kernel.project_dir%/vendor/softspring/components/templates' => 'SfsComponents',
-            ],
-        ]);
     }
 }
