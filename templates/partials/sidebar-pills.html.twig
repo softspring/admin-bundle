@@ -1,23 +1,2 @@
-{% extends '@SfsAdmin/partials/_cacheable_sidebar.html.twig' %}
-
-{% block sidebar %}
-<div class="nav-pills p-0 m-0">
-    {% for sidebar_block in sidebar_blocks %}
-        <div class="nav-link text-lowercase text-muted" style="font-variant: small-caps">{{ sidebar_block.title }}</div>
-
-        {% for element in sidebar_block.elements %}
-            {% if element.enabled %}
-                <a class="nav-link {{ active_for_routes(element.active_expression, null, active_for_routes_class) }}" href="{{ url(element.route) }}">
-                    {% if element.icon|default(false) %}<span class="{{ element.icon }}"></span>{% endif %}
-                    <span class="title text-capitalize">{{ element.text }}</span>
-                </a>
-            {% else %}
-                <a class="nav-link {{ active_for_routes(element.active_expression, null, active_for_routes_class) }} disabled" href="#">
-                    {% if element.icon|default(false) %}<span class="{{ element.icon }}"></span>{% endif %}
-                    <span class="title text-capitalize">{{ element.text }}</span>
-                </a>
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
-</div>
-{% endblock sidebar %}
+{% deprecated 'Use @SfsComponents/sidebar/sidebar-pills.html.twig' %}
+{% extends '@SfsComponents/sidebar/sidebar-pills.html.twig' %}
